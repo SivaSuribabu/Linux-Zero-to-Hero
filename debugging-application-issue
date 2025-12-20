@@ -1,0 +1,52 @@
+#Use Linux commands to debug the application issue and solve it.
+# Production server or Staging server
+
+1. uname
+2. pwd -- find the directory of application
+3. cd /var/log/application_logs
+4. pwd
+5. ls -ltr
+6. cat error.log | tail -n 20
+7. cat error.log | grep "database"
+8. cat error.log | grep database > db_errors.txt
+9. cp db_errors.log /~/backup/ 
+10. cat db_errors.txt | grep "connection_refused" | wc -l
+-l count lines,
+-w count words
+-c count bytes
+-m count characters
+-L Find the longest line
+
+#we found that ther is an issue with the database port number
+#we need to find where is the database configuration file
+1. databse.conf
+2. postgress.conf
+3. mysql.conf
+4. db.conf
+
+find /  -name "*.conf" | grep db
+find / -name "*db.conf*" | grep db
+
+diff /etc/db.conf /etc/db.conf.bak
+
+#now we need to see the db is runnign on specific port (5432)or not
+
+curl -I https://localhost:5432 
+
+sudo vi db.conf 
+ 
+ 123456789
+ ----------
+ 1. - file type
+ 2. --- rwx for users
+ 3. --- rwx for group
+ 4. --- rwx for others
+
+(4= read, 2= write, 1= execute, 0= no permission)
+ 777 - full permission for all
+ 755 - full permission for user, read and execute for group and others
+ 644 - read and write for user, read for group and others
+ 600 - read and write for user, no permission for group and others
+
+
+ chmod db.conf 
