@@ -17,6 +17,9 @@
 -m count characters
 -L Find the longest line
 
+# how to filter first 100 lines in a file --> head -n 100 error.log
+# how to filter last 100 lines in a file --> tail -n 100 error.log
+
 #we found that ther is an issue with the database port number
 #we need to find where is the database configuration file
 1. databse.conf
