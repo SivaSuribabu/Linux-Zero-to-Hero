@@ -1,0 +1,161 @@
+1. Log Analysis & Monitoring
+Use case: Identify failures, trends, and anomalies
+Typical tasks:
+Count error types in logs
+Extract last N errors
+Rotate and archive logs
+Generate daily error reports
+
+Example:
+grep -i error application.log | sort | uniq -c | sort -nr
+
+
+2. Disk, Memory & CPU Monitoring
+Use case: Prevent outages due to resource exhaustion
+Typical tasks:
+Alert if disk usage > 80%
+Capture memory and CPU usage
+Send email / Slack alerts
+
+Example:
+df -h | awk '$5+0 > 80 {print $0}'
+
+
+3. Backup & Restore Automation
+Use case: Data protection and disaster recovery
+Typical tasks:
+Take daily backups of databases/files
+Compress and upload to S3
+Auto-delete backups older than N days
+
+Example:
+tar -czf backup_$(date +%F).tar.gz /data
+
+4. Application Deployment Scripts
+Use case: Consistent and repeatable deployments
+Typical tasks:
+Pull latest code
+Build artifacts
+Restart services
+Rollback on failure
+
+Example:
+git pull && systemctl restart app.service
+
+5. Service Health Checks
+Use case: Ensure critical services are running
+Typical tasks:
+Check status of nginx, docker, kubelet
+Auto-restart failed services
+Log downtime
+
+Example:
+systemctl is-active nginx || systemctl restart nginx
+
+6. User & Permission Management
+Use case: Server access control
+Typical tasks:
+Create/delete users
+Set SSH access
+
+Enforce least privilege
+
+Example:
+
+useradd devuser && passwd devuser
+
+7. Cleanup & Cost Optimization
+
+Use case: Reduce storage and cloud costs
+
+Typical tasks:
+
+Delete old logs
+
+Remove unused Docker images
+
+Clean temp directories
+
+Example:
+
+find /var/log -type f -mtime +30 -delete
+
+8. CI/CD Pipeline Helpers
+
+Use case: Support Jenkins / GitHub Actions
+
+Typical tasks:
+
+Version tagging
+
+Artifact naming
+
+Build metadata generation
+
+Example:
+
+BUILD_ID=$(date +%Y%m%d%H%M)
+
+9. Kubernetes Automation
+
+Use case: Cluster operations
+
+Typical tasks:
+
+Check pod health
+
+Restart failed pods
+
+Capture namespace resource usage
+
+Example:
+
+kubectl get pods -A | grep CrashLoopBackOff
+
+10. Cloud Resource Reporting (AWS/Azure/GCP)
+
+Use case: Visibility and governance
+
+Typical tasks:
+
+List running EC2 instances
+
+Identify unused volumes
+
+Generate cost reports
+
+Example:
+
+aws ec2 describe-instances --query 'Reservations[].Instances[].InstanceId'
+
+11. Security & Compliance Checks
+
+Use case: Reduce attack surface
+
+Typical tasks:
+
+Find open ports
+
+Detect failed SSH attempts
+
+Validate file permissions
+
+Example:
+
+grep "Failed password" /var/log/auth.log
+
+12. Cron Job Automation
+
+Use case: Scheduled maintenance
+
+Typical tasks:
+
+Daily health checks
+
+Log cleanup
+
+Backup execution
+
+Example:
+
+0 2 * * * /opt/scripts/backup.sh
