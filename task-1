@@ -1,0 +1,15 @@
+1. Log Analysis & Monitoring
+Use case: Identify failures, trends, and anomalies
+Typical tasks:
+Count error types in logs
+Extract last N errors
+Rotate and archive logs
+Generate daily error reports
+
+example :  awk '{print $3}' application.log | sort | uniq -c
+
+output:
+    132 [DEBUG]
+    112 [ERROR]
+    112 [INFO]
+    144 [WARN]
