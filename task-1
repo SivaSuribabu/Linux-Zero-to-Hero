@@ -7,9 +7,53 @@ Rotate and archive logs
 Generate daily error reports
 
 example :  awk '{print $3}' application.log | sort | uniq -c
-
 output:
     132 [DEBUG]
     112 [ERROR]
     112 [INFO]
     144 [WARN]
+
+SCRIPT
+####################################################################################################################################
+#!/bin/bash
+#Author : Siva Suribabu
+#Date : 2024-06-15
+#Description : This script rotates daily log files and keeps logs for the last 7 days.
+
+
+LOG_FILES_LOCATION="/home/siva-devops/Documents/projects/Linux-Zero-to-Hero/system.log"
+DATE=$(date +"%Y-%m-%d")
+REPORT_DIRECTORY="/home/siva-devops/Documents/projects/Linux-Zero-to-Hero/log-reports"
+REPORT_FILE="$REPORT_DIRECTORY/system-log-rotation-report-$DATE.txt"
+
+mkdir -p ${REPORT_DIRECTORY}
+echo "" >> ${REPORT_FILE}
+
+cat ${LOG_FILES_LOCATION} | awk '{print $3}' | sort | uniq -c | sort -nr >> ${REPORT_FILE}
+echo "######################################################################################################" >> ${REPORT_FILE}
+grep "ERROR" ${LOG_FILES_LOCATION} | awk '{print $3}' | sort | uniq -c | sort -nr >> ${REPORT_FILE}
+grep "ERROR" ${LOG_FILES_LOCATION} | head -n 10 >> ${REPORT_FILE}
+grep "ERROR" ${LOG_FILES_LOCATION} | tail -n 10 >> ${REPORT_FILE}
+echo "######################################################################################################" >> ${REPORT_FILE}
+
+echo "######################################################################################################" >> ${REPORT_FILE}
+grep "WARN" $LOG_FILES_LOCATION | awk '{print $3}' | sort | uniq -c | sort -nr >> ${REPORT_FILE}
+grep "WARN" $LOG_FILES_LOCATION | head -n 10 >> ${REPORT_FILE}
+grep "WARN" $LOG_FILES_LOCATION | tail -n 10 >> ${REPORT_FILE}
+echo "######################################################################################################" >> ${REPORT_FILE}
+
+echo "######################################################################################################" >> ${REPORT_FILE}
+grep "INFO" $LOG_FILES_LOCATION | awk '{print $3}' | sort | uniq -c | sort -nr >> ${REPORT_FILE}
+grep "INFO" $LOG_FILES_LOCATION | head -n 10 >> ${REPORT_FILE}
+grep "INFO" $LOG_FILES_LOCATION | tail -n 10 >> ${REPORT_FILE}
+echo "######################################################################################################" >> ${REPORT_FILE}
+
+echo "######################################################################################################" >> ${REPORT_FILE}
+grep "CRITICAL" $LOG_FILES_LOCATION | awk '{print $3}' | sort | uniq -c | sort -nr >> ${REPORT_FILE}
+grep "CRITICAL" $LOG_FILES_LOCATION | head -n 10 >> ${REPORT_FILE}
+grep "CRITICAL" $LOG_FILES_LOCATION | tail -n 10 >> ${REPORT_FILE}
+echo "######################################################################################################" >> ${REPORT_FILE}
+
+
+echo "The system error log rotation report has been generated at: ${REPORT_FILE}" >> ${REPORT_FILE}
+###########################################################################################################################################
