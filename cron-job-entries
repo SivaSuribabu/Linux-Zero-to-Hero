@@ -1,0 +1,66 @@
+This line is a cron job entry. It tells Linux when and how to run your script automatically.
+0 23 * * * /bin/bash /opt/scripts/daily_error_report.sh
+
+Cron Time Fields (Left Side)
+
+Cron format:
+┌ minute (0–59)
+│ ┌ hour (0–23)
+│ │ ┌ day of month (1–31)
+│ │ │ ┌ month (1–12)
+│ │ │ │ ┌ day of week (0–7, Sun=0 or 7)
+│ │ │ │ │
+0  23  *  *  *
+
+Meaning of each value
+0 → minute 0 (exactly at the start of the hour)
+23 → hour 23 (11:00 PM)
+* → every day of the month
+* → every month
+* → every day of the week
+👉 So this runs every day at 11:00 PM
+
+Command Part (Right Side)
+/bin/bash /opt/scripts/daily_error_report.sh
+
+Explanation
+
+/bin/bash → explicitly uses the Bash shell
+
+/opt/scripts/daily_error_report.sh → full path to your script
+
+Why full paths are important in cron
+
+Cron runs with a minimal environment
+
+Relative paths may fail
+
+Explicit shell + absolute paths = production best practice
+
+What Happens at 11:00 PM Daily
+
+Cron wakes up
+
+Bash is invoked
+
+daily_error_report.sh runs
+
+Log analysis is performed
+
+A new date-based error report is generated
+
+How to verify it is working
+Check cron logs
+grep CRON /var/log/syslog      # Ubuntu/Debian
+grep CRON /var/log/cron       # RHEL/CentOS
+
+Test manually
+/bin/bash /opt/scripts/daily_error_report.sh
+
+Common production mistakes (avoid these)
+Mistake	Result
+Using sh instead of bash	Script may fail
+Using relative paths	Cron cannot find files
+Missing execute permission	Script won’t run
+Fix permission
+chmod +x /opt/scripts/daily_error_report.sh
