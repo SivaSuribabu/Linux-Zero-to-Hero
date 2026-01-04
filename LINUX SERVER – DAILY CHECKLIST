@@ -1,0 +1,38 @@
+1. System Health
+
+| Check          | Command       | Explanation                                |
+| -------------- | ------------- | ------------------------------------------ |
+| Server uptime  | `uptime`      | Shows how long the server has been running |
+| Last reboot    | `who -b`      | Confirms last boot time                    |
+| Reboot history | `last reboot` | Detects unexpected restarts                |
+
+
+2. CPU & Memory
+
+| Check        | Command        | Explanation               |
+| ------------ | -------------- | ------------------------- |
+| CPU usage    | `top` / `htop` | Real-time CPU consumption |
+| Memory usage | `free -h`      | RAM & swap usage          |
+| Load average | `uptime`       | Checks CPU pressure       |
+| VM stats     | `vmstat 1 5`   | CPU, memory, IO snapshot  |
+
+
+3. Disk & Storage
+
+| Check          | Command    | Explanation              |                 |
+| -------------- | ---------- | ------------------------ | --------------- |
+| Disk usage     | `df -h`    | Filesystem usage         |                 |
+| Inode usage    | `df -i`    | Prevent inode exhaustion |                 |
+| Directory size | `du -sh *` | Finds disk hogs          |                 |
+| Block devices  | `lsblk`    | Shows disks & partitions |                 |
+| Mounted FS     | `mount     | column -t`               | Verifies mounts |
+
+4. Services & Processes
+
+| Check               | Command                               | Explanation           |                        |
+| ------------------- | ------------------------------------- | --------------------- | ---------------------- |
+| Service status      | `systemctl status <svc>`              | Checks service health |                        |
+| Running services    | `systemctl list-units --type=service` | Active services       |                        |
+| High CPU process    | `ps aux --sort=-%cpu                  | head`                 | CPU-heavy processes    |
+| High memory process | `ps aux --sort=-%mem                  | head`                 | Memory-heavy processes |
+
